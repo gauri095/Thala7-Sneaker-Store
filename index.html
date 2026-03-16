@@ -375,198 +375,331 @@
 </div>
  
 <script>
-  // ═══════════════════════════════════════
-  //  SHARED CART STATE
-  // ═══════════════════════════════════════
-  let cart = [
-    { id:1, name:'Air Phantom Pro', meta:['Size: US 8','Red Fire'], img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop', price:149, original:229, qty:1 },
-    { id:2, name:'Urban Drift Low',  meta:['Size: US 9','Midnight'], img:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=200&auto=format&fit=crop', price:119, original:179, qty:2 },
-    { id:3, name:'Volt Runner X',    meta:['Size: US 10','Ocean'],   img:'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200&auto=format&fit=crop', price:189, original:189, qty:1 }
-  ];
-  let cartCouponOn = false;
-  let payCouponOn = false;
-  const TAX = 0.08;
-  const DISC = 0.20;
- 
-  // ═══════════════════════════════════════
-  //  NAVIGATION
-  // ═══════════════════════════════════════
-  function goto(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    window.scrollTo(0,0);
-    if (page === 'cart') renderCart();
-    if (page === 'payment') renderPaymentSummary();
+    // ═══════════════════════════════════════════════════════════
+//  THALA 7 — script.js
+//  All application logic: navigation, cart, product, payment
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════
+//  SHARED CART STATE
+// ═══════════════════════════════════════
+let cart = [
+  {
+    id: 1, name: 'Air Phantom Pro',
+    meta: ['Size: US 8', 'Red Fire'],
+    img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop',
+    price: 12499, original: 19199, qty: 1
+  },
+  {
+    id: 2, name: 'Urban Drift Low',
+    meta: ['Size: US 9', 'Midnight'],
+    img: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=200&auto=format&fit=crop',
+    price: 8999, original: 13999, qty: 2
+  },
+  {
+    id: 3, name: 'Volt Runner X',
+    meta: ['Size: US 10', 'Ocean'],
+    img: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200&auto=format&fit=crop',
+    price: 15499, original: 15499, qty: 1
   }
- 
-  // ═══════════════════════════════════════
-  //  CART BADGE
-  // ═══════════════════════════════════════
-  function updateBadge() {
-    const total = cart.reduce((s,i) => s+i.qty, 0);
-    const badge = document.getElementById('cartBadge');
-    badge.textContent = total;
-    badge.classList.add('bump');
-    setTimeout(() => badge.classList.remove('bump'), 300);
+];
+
+let cartCouponOn = false;
+let payCouponOn  = false;
+
+const TAX_RATE   = 0.18;   // 18% GST
+const DISC_RATE  = 0.20;   // 20% coupon discount
+const COUPON_CODE = 'STRIDE20';
+
+// ═══════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════
+
+/** Format a number as Indian Rupee string e.g. ₹12,499.00 */
+function inr(amount) {
+  return '₹' + amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// ═══════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════
+function goto(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+  if (page === 'cart')    renderCart();
+  if (page === 'payment') renderPaymentSummary();
+}
+
+// ═══════════════════════════════════════
+//  CART BADGE
+// ═══════════════════════════════════════
+function updateBadge() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = total;
+  badge.classList.add('bump');
+  setTimeout(() => badge.classList.remove('bump'), 300);
+}
+
+// ═══════════════════════════════════════
+//  PRODUCT PAGE
+// ═══════════════════════════════════════
+let productQty = 1;
+
+function changeProductQty(d) {
+  productQty = Math.max(1, Math.min(10, productQty + d));
+  document.getElementById('productQty').textContent = productQty;
+}
+
+function selectSize(btn) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function selectColor(sw) {
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+  sw.classList.add('active');
+}
+
+function switchGallery(card, src) {
+  document.querySelectorAll('.gallery-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  const img = document.getElementById('mainImg');
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    img.src = src;
+    img.style.transition = 'opacity 0.35s, transform 0.35s';
+    img.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  }, 200);
+}
+
+function addToCart() {
+  const existing = cart.find(i => i.id === 1);
+  if (existing) {
+    existing.qty += productQty;
+  } else {
+    cart.unshift({
+      id: 1, name: 'Air Phantom Pro',
+      meta: ['Size: US 8', 'Red Fire'],
+      img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop',
+      price: 12499, original: 19199, qty: productQty
+    });
   }
- 
-  // ═══════════════════════════════════════
-  //  PRODUCT PAGE
-  // ═══════════════════════════════════════
-  let productQty = 1;
-  function changeProductQty(d) {
-    productQty = Math.max(1, Math.min(10, productQty + d));
-    document.getElementById('productQty').textContent = productQty;
-  }
-  function selectSize(btn) {
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  function selectColor(sw) {
-    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-    sw.classList.add('active');
-  }
-  function switchGallery(card, src) {
-    document.querySelectorAll('.gallery-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-    const img = document.getElementById('mainImg');
-    img.style.opacity = '0'; img.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      img.src = src;
-      img.style.transition = 'opacity 0.35s,transform 0.35s';
-      img.style.opacity = '1'; img.style.transform = 'scale(1)';
-    }, 200);
-  }
-  function addToCart() {
-    const existing = cart.find(i => i.id === 1);
-    if (existing) existing.qty += productQty;
-    else cart.unshift({ id:1, name:'Air Phantom Pro', meta:['Size: US 8','Red Fire'], img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop', price:149, original:229, qty:productQty });
-    updateBadge();
-    // brief feedback
-    const btn = document.querySelector('.btn-add-cart');
-    const orig = btn.innerHTML;
-    btn.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Added!';
-    btn.style.background = 'var(--green)';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1500);
-  }
- 
-  // ═══════════════════════════════════════
-  //  CART PAGE
-  // ═══════════════════════════════════════
-  function renderCart() {
-    const tbody = document.getElementById('cartBody');
-    tbody.innerHTML = '';
-    if (!cart.length) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:60px;color:var(--muted)">🛒 Your cart is empty. <span onclick="goto('product')" style="color:var(--accent);cursor:pointer">Keep shopping →</span></td></tr>`;
-    } else {
-      cart.forEach((p, i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><div class="product-cell">
-            <div class="product-thumb"><img src="${p.img}" /></div>
-            <div><div class="p-name">${p.name}</div><div class="p-meta">${p.meta.map(m=>`<span>${m}</span>`).join('')}</div></div>
-          </div></td>
-          <td class="qty-cell"><div class="qty-control">
-            <button class="qty-btn" onclick="cartQty(${i},-1)">−</button>
-            <div class="qty-value">${p.qty}</div>
-            <button class="qty-btn" onclick="cartQty(${i},1)">+</button>
-          </div></td>
-          <td class="price-cell">₹₹{(p.price*p.qty).toFixed(2)}${p.original!==p.price?`<span class="original">₹₹{(p.original*p.qty).toFixed(2)}</span>`:''}</td>
-          <td class="remove-cell"><button class="remove-btn" onclick="removeCartItem(${i})"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>`;
-        tbody.appendChild(tr);
-      });
-    }
-    calcCart();
-  }
-  function cartQty(i, d) { cart[i].qty = Math.max(1, cart[i].qty + d); renderCart(); }
-  function removeCartItem(i) {
-    const rows = document.getElementById('cartBody').rows;
-    if (rows[i]) { rows[i].style.transition = 'opacity 0.25s,transform 0.25s'; rows[i].style.opacity='0'; rows[i].style.transform='translateX(30px)'; }
-    setTimeout(() => { cart.splice(i,1); renderCart(); updateBadge(); }, 260);
-  }
-  function calcCart(couponOn) {
-    const on = couponOn !== undefined ? couponOn : cartCouponOn;
-    const sub = cart.reduce((s,p) => s+p.price*p.qty, 0);
-    const tax = sub * TAX;
-    const disc = on ? (sub+tax)*DISC : 0;
-    const total = sub + tax - disc;
-    document.getElementById('cartSubtotal').textContent = `₹₹{sub.toFixed(2)}`;
-    document.getElementById('cartTax').textContent = `₹₹{tax.toFixed(2)}`;
-    document.getElementById('cartDiscount').textContent = disc>0?`— ₹₹{disc.toFixed(2)}`:'— ₹0.00';
-    document.getElementById('cartTotal').textContent = `₹₹{total.toFixed(2)}`;
-    document.getElementById('cartItemLabel').textContent = `${cart.reduce((s,p)=>s+p.qty,0)} Items`;
-    updateBadge();
-  }
-  function applyCartCoupon() {
-    const v = document.getElementById('cartCoupon').value.trim().toUpperCase();
-    cartCouponOn = v === 'STRIDE20';
-    document.getElementById('cartCouponOk').classList.toggle('show', cartCouponOn);
-    if (!cartCouponOn) { const el=document.getElementById('cartCoupon'); el.style.borderColor='rgba(255,60,31,0.6)'; setTimeout(()=>el.style.borderColor='',1200); }
-    calcCart(cartCouponOn);
-  }
- 
-  // ═══════════════════════════════════════
-  //  PAYMENT PAGE
-  // ═══════════════════════════════════════
-  function renderPaymentSummary() {
-    const mini = document.getElementById('payMiniItems');
-    mini.innerHTML = cart.map(p=>`
-      <div class="mini-item">
-        <img class="mini-thumb" src="${p.img}" />
-        <span class="mini-name">${p.name} <span style="color:var(--muted)">×${p.qty}</span></span>
-        <span class="mini-price">₹₹{(p.price*p.qty).toFixed(2)}</span>
-      </div>`).join('');
-    calcPay(payCouponOn);
-  }
-  function calcPay(on) {
-    const sub = cart.reduce((s,p) => s+p.price*p.qty, 0);
-    const tax = sub * TAX;
-    const disc = on ? (sub+tax)*DISC : 0;
-    const total = sub + tax - disc;
-    document.getElementById('paySubtotal').textContent = `₹₹{sub.toFixed(2)}`;
-    document.getElementById('payTax').textContent = `₹₹{tax.toFixed(2)}`;
-    document.getElementById('payDiscount').textContent = disc>0?`— ₹₹{disc.toFixed(2)}`:'— ₹0.00';
-    document.getElementById('payTotal').textContent = `₹₹{total.toFixed(2)}`;
-  }
-  function applyPayCoupon() {
-    const v = document.getElementById('payCoupon').value.trim().toUpperCase();
-    payCouponOn = v === 'STRIDE20';
-    document.getElementById('payCouponOk').classList.toggle('show', payCouponOn);
-    if (!payCouponOn) { const el=document.getElementById('payCoupon'); el.style.borderColor='rgba(255,60,31,0.6)'; setTimeout(()=>el.style.borderColor='',1200); }
-    calcPay(payCouponOn);
-  }
- 
-  // Payment tabs
-  const payPanels = ['card','upi','crypto','bank','wallet'];
-  function switchPayTab(id, el) {
-    document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    payPanels.forEach(p => { const panel=document.getElementById('ppanel-'+p); if(panel) panel.style.display = p===id?'block':'none'; });
-  }
-  payPanels.forEach(p => { const panel=document.getElementById('ppanel-'+p); if(panel&&p!=='card') panel.style.display='none'; });
- 
-  // Card live display
-  function fmtCardNum(el) { let v=el.value.replace(/\D/g,'').substring(0,16); el.value=v.replace(/(.{4})/g,'$1 ').trim(); }
-  function fmtExpiry(el) { let v=el.value.replace(/\D/g,'').substring(0,4); if(v.length>=2) v=v.substring(0,2)+' / '+v.substring(2); el.value=v; }
-  function updateCardDisplay() { const raw=document.querySelector('#ppanel-card input[placeholder="1234 5678 9012 3456"]').value||''; document.getElementById('cardNumDisplay').textContent=(raw+'                   ').substring(0,19)||'•••• •••• •••• ••••'; }
-  function updateCardHolder() { const fn=document.getElementById('firstName').value||''; const ln=document.getElementById('lastName').value||''; document.getElementById('cardHolderDisplay').textContent=(fn+' '+ln).trim().toUpperCase()||'YOUR NAME'; }
- 
-  // Place order
-  function placeOrder() {
-    const orderId = 'SX-' + Math.floor(100000+Math.random()*900000);
-    document.getElementById('confirmId').textContent = 'ORDER #' + orderId;
-    document.getElementById('confirmOverlay').classList.add('show');
-  }
-  function closeConfirm() {
-    document.getElementById('confirmOverlay').classList.remove('show');
-    cart = [];
-    cartCouponOn = false; payCouponOn = false;
-    updateBadge();
-    goto('landing');
-  }
- 
-  // Init
   updateBadge();
+
+  // Green "Added!" feedback
+  const btn  = document.querySelector('.btn-add-cart');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Added!';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1500);
+}
+
+// ═══════════════════════════════════════
+//  CART PAGE
+// ═══════════════════════════════════════
+function renderCart() {
+  const tbody = document.getElementById('cartBody');
+  tbody.innerHTML = '';
+
+  if (!cart.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align:center;padding:60px;color:var(--muted)">
+          🛒 Your cart is empty.
+          <span onclick="goto('product')" style="color:var(--accent);cursor:pointer">Keep shopping →</span>
+        </td>
+      </tr>`;
+  } else {
+    cart.forEach((p, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div class="product-cell">
+            <div class="product-thumb"><img src="${p.img}" /></div>
+            <div>
+              <div class="p-name">${p.name}</div>
+              <div class="p-meta">${p.meta.map(m => `<span>${m}</span>`).join('')}</div>
+            </div>
+          </div>
+        </td>
+        <td class="qty-cell">
+          <div class="qty-control">
+            <button class="qty-btn" onclick="cartQty(${i}, -1)">−</button>
+            <div class="qty-value">${p.qty}</div>
+            <button class="qty-btn" onclick="cartQty(${i}, 1)">+</button>
+          </div>
+        </td>
+        <td class="price-cell">
+          ${inr(p.price * p.qty)}
+          ${p.original !== p.price ? `<span class="original">${inr(p.original * p.qty)}</span>` : ''}
+        </td>
+        <td class="remove-cell">
+          <button class="remove-btn" onclick="removeCartItem(${i})">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+              <path d="M10 11v6M14 11v6"/>
+              <path d="M9 6V4h6v2"/>
+            </svg>
+          </button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  calcCart();
+}
+
+function cartQty(i, d) {
+  cart[i].qty = Math.max(1, cart[i].qty + d);
+  renderCart();
+}
+
+function removeCartItem(i) {
+  const rows = document.getElementById('cartBody').rows;
+  if (rows[i]) {
+    rows[i].style.transition = 'opacity 0.25s, transform 0.25s';
+    rows[i].style.opacity    = '0';
+    rows[i].style.transform  = 'translateX(30px)';
+  }
+  setTimeout(() => { cart.splice(i, 1); renderCart(); updateBadge(); }, 260);
+}
+
+function calcCart(couponOn) {
+  const on  = couponOn !== undefined ? couponOn : cartCouponOn;
+  const sub  = cart.reduce((s, p) => s + p.price * p.qty, 0);
+  const tax  = sub * TAX_RATE;
+  const disc = on ? (sub + tax) * DISC_RATE : 0;
+  const total = sub + tax - disc;
+
+  document.getElementById('cartSubtotal').textContent = inr(sub);
+  document.getElementById('cartTax').textContent      = inr(tax);
+  document.getElementById('cartDiscount').textContent = disc > 0 ? `— ${inr(disc)}` : `— ₹0.00`;
+  document.getElementById('cartTotal').textContent    = inr(total);
+  document.getElementById('cartItemLabel').textContent =
+    `${cart.reduce((s, p) => s + p.qty, 0)} Items`;
+
+  updateBadge();
+}
+
+function applyCartCoupon() {
+  const v = document.getElementById('cartCoupon').value.trim().toUpperCase();
+  cartCouponOn = (v === COUPON_CODE);
+  document.getElementById('cartCouponOk').classList.toggle('show', cartCouponOn);
+  if (!cartCouponOn) {
+    const el = document.getElementById('cartCoupon');
+    el.style.borderColor = 'rgba(255,60,31,0.6)';
+    setTimeout(() => el.style.borderColor = '', 1200);
+  }
+  calcCart(cartCouponOn);
+}
+
+// ═══════════════════════════════════════
+//  PAYMENT PAGE
+// ═══════════════════════════════════════
+function renderPaymentSummary() {
+  const mini = document.getElementById('payMiniItems');
+  mini.innerHTML = cart.map(p => `
+    <div class="mini-item">
+      <img class="mini-thumb" src="${p.img}" />
+      <span class="mini-name">${p.name} <span style="color:var(--muted)">×${p.qty}</span></span>
+      <span class="mini-price">${inr(p.price * p.qty)}</span>
+    </div>`).join('');
+  calcPay(payCouponOn);
+}
+
+function calcPay(on) {
+  const sub  = cart.reduce((s, p) => s + p.price * p.qty, 0);
+  const tax  = sub * TAX_RATE;
+  const disc = on ? (sub + tax) * DISC_RATE : 0;
+  const total = sub + tax - disc;
+
+  document.getElementById('paySubtotal').textContent = inr(sub);
+  document.getElementById('payTax').textContent      = inr(tax);
+  document.getElementById('payDiscount').textContent = disc > 0 ? `— ${inr(disc)}` : `— ₹0.00`;
+  document.getElementById('payTotal').textContent    = inr(total);
+}
+
+function applyPayCoupon() {
+  const v = document.getElementById('payCoupon').value.trim().toUpperCase();
+  payCouponOn = (v === COUPON_CODE);
+  document.getElementById('payCouponOk').classList.toggle('show', payCouponOn);
+  if (!payCouponOn) {
+    const el = document.getElementById('payCoupon');
+    el.style.borderColor = 'rgba(255,60,31,0.6)';
+    setTimeout(() => el.style.borderColor = '', 1200);
+  }
+  calcPay(payCouponOn);
+}
+
+// ── Payment method tabs ──
+const payPanels = ['card', 'upi', 'crypto', 'bank', 'wallet'];
+
+function switchPayTab(id, el) {
+  document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  payPanels.forEach(p => {
+    const panel = document.getElementById('ppanel-' + p);
+    if (panel) panel.style.display = (p === id) ? 'block' : 'none';
+  });
+}
+
+// ── Live card preview ──
+function fmtCardNum(el) {
+  let v = el.value.replace(/\D/g, '').substring(0, 16);
+  el.value = v.replace(/(.{4})/g, '$1 ').trim();
+}
+
+function fmtExpiry(el) {
+  let v = el.value.replace(/\D/g, '').substring(0, 4);
+  if (v.length >= 2) v = v.substring(0, 2) + ' / ' + v.substring(2);
+  el.value = v;
+}
+
+function updateCardDisplay() {
+  const input = document.querySelector('#ppanel-card input[placeholder="1234 5678 9012 3456"]');
+  const raw   = input ? input.value : '';
+  const padded = (raw + '                   ').substring(0, 19);
+  document.getElementById('cardNumDisplay').textContent = padded || '•••• •••• •••• ••••';
+}
+
+function updateCardHolder() {
+  const fn = document.getElementById('firstName').value || '';
+  const ln = document.getElementById('lastName').value  || '';
+  const name = (fn + ' ' + ln).trim().toUpperCase() || 'YOUR NAME';
+  document.getElementById('cardHolderDisplay').textContent = name;
+}
+
+// ── Place order ──
+function placeOrder() {
+  const orderId = 'T7-' + Math.floor(100000 + Math.random() * 900000);
+  document.getElementById('confirmId').textContent = 'ORDER #' + orderId;
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('show');
+  cart         = [];
+  cartCouponOn = false;
+  payCouponOn  = false;
+  updateBadge();
+  goto('landing');
+}
+
+// ═══════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════
+(function init() {
+  // Hide all payment panels except card
+  payPanels.forEach(p => {
+    const panel = document.getElementById('ppanel-' + p);
+    if (panel && p !== 'card') panel.style.display = 'none';
+  });
+  updateBadge();
+})();
 </script>
 </body>
 </html>
