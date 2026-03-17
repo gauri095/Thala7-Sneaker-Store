@@ -7,43 +7,45 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ══════════════════════ HEADER ══════════════════════ -->
+    <!-- Confirmation checkbox (global state) -->
+<input type="checkbox" id="orderDone" />
+ 
+<!-- ══════════════════════ HEADER ══════════════════════ -->
 <header>
-  <span class="logo" onclick="goto('landing')">THALA 7.<span>X</span></span>
+  <a class="logo" href="#page-landing">THALA 7.</a>
   <nav>
-    <a onclick="goto('landing')" id="nav-landing">Home</a>
-    <a onclick="goto('product')" id="nav-product">Shop</a>
+    <a href="#page-landing">Home</a>
+    <a href="#page-product">Shop</a>
     <a href="#">Men</a>
     <a href="#">Women</a>
     <a href="#">Sale</a>
   </nav>
   <div class="nav-icons">
-    <button title="Search">
+    <button class="nav-icon-btn" title="Search">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </button>
-    <button class="cart-btn" title="Cart" onclick="goto('cart')">
-      <span class="cart-count" id="cartBadge">0</span>
+    <a class="nav-icon-btn" href="#page-cart" title="Cart" style="position:relative;">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-    </button>
+    </a>
     <div class="avatar">JD</div>
   </div>
 </header>
  
 <!-- ══════════════════════ PAGE 1: LANDING ══════════════════════ -->
-<div class="page active" id="page-landing">
+<div class="page" id="page-landing">
   <section class="hero">
     <div class="hero-bg-text">RUN</div>
     <div class="hero-content">
       <div class="hero-left">
         <span class="hero-badge">✦ New Drop 2026</span>
-        <h1 class="hero-heading">BUILT TO<br><span class="line2">DOMINATE</span><br>THE STREETS</h1>
+        <h1 class="hero-heading">BUILT TO<br><span class="accent">DOMINATE</span><br>THE STREETS</h1>
         <p class="hero-desc">Engineered for performance, designed to turn heads. Our latest silhouette blends responsive cushioning with a street-ready aesthetic.</p>
         <div class="hero-cta">
-          <button class="btn-primary" onclick="goto('product')">
+          <a class="btn-primary" href="#page-product">
             Shop Now
             <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-          <span class="btn-ghost" onclick="goto('cart')">View Cart</span>
+          </a>
+          <a class="btn-ghost" href="#page-cart">View Cart</a>
         </div>
       </div>
       <div class="hero-right">
@@ -67,10 +69,10 @@
 </div>
  
 <!-- ══════════════════════ PAGE 2: PRODUCT ══════════════════════ -->
-<div class="page" id="page-product" style="margin-top:var(--nav-height)">
-  <div style="padding:20px 60px 0; max-width:1300px; margin:0 auto;">
+<div class="page" id="page-product" style="margin-top:var(--nav-h)">
+  <div style="padding:20px 60px 0;max-width:1300px;margin:0 auto;">
     <div class="breadcrumb">
-      <a onclick="goto('landing')">Home</a><span>›</span>
+      <a href="#page-landing">Home</a><span>›</span>
       <span class="current">Air Phantom Pro</span>
     </div>
   </div>
@@ -78,114 +80,232 @@
     <div class="product-image-col">
       <div class="main-image-wrap">
         <span class="img-badge">🔥 Hot Deal</span>
-        <img class="main-shoe-img" id="mainImg" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&auto=format&fit=crop" alt="Air Phantom Pro" />
+        <img class="main-shoe-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&auto=format&fit=crop" alt="Air Phantom Pro" />
       </div>
     </div>
+ 
     <div class="product-info-col">
-      <div class="product-brand">STRIDEX ORIGINALS</div>
-      <h1 class="product-name">AIR<br><span class="name-line2">PHANTOM PRO</span></h1>
-      <div class="product-rating"><span class="stars">★★★★½</span><span class="rating-count">4.5 · 2,341 Reviews</span></div>
+      <div class="product-brand">THALA-7 ORIGINALS</div>
+      <h1 class="product-name">AIR<br><span class="accent">PHANTOM PRO</span></h1>
+      <div class="product-rating">
+        <span class="stars">★★★★½</span>
+        <span class="rating-count">4.5 · 2,341 Reviews</span>
+      </div>
       <p class="product-desc">The Air Phantom Pro pushes the boundaries of street performance. Featuring a full-length responsive foam midsole, breathable engineered mesh upper, and a grippy rubber outsole — all-day comfort without sacrificing style.</p>
+ 
       <div class="price-block">
         <span class="price-current">₹12,499</span>
         <span class="price-original">₹19,199</span>
         <span class="sale-pill">35% OFF</span>
       </div>
+ 
+      <!-- SIZE (radio) -->
       <div class="selector-label">Select Size (US)</div>
       <div class="size-grid">
-        <button class="size-btn sold-out" disabled>6</button>
-        <button class="size-btn" onclick="selectSize(this)">7</button>
-        <button class="size-btn" onclick="selectSize(this)">7.5</button>
-        <button class="size-btn active" onclick="selectSize(this)">8</button>
-        <button class="size-btn" onclick="selectSize(this)">8.5</button>
-        <button class="size-btn" onclick="selectSize(this)">9</button>
-        <button class="size-btn" onclick="selectSize(this)">9.5</button>
-        <button class="size-btn" onclick="selectSize(this)">10</button>
-        <button class="size-btn sold-out" disabled>10.5</button>
-        <button class="size-btn" onclick="selectSize(this)">11</button>
+        <span class="size-sold" style="width:52px;height:44px;background:var(--card);border:1px solid var(--border);color:#444;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;text-decoration:line-through;">6</span>
+        <input type="radio" name="size" id="sz7"  /><label for="sz7">7</label>
+        <input type="radio" name="size" id="sz75" /><label for="sz75">7.5</label>
+        <input type="radio" name="size" id="sz8"  checked /><label for="sz8">8</label>
+        <input type="radio" name="size" id="sz85" /><label for="sz85">8.5</label>
+        <input type="radio" name="size" id="sz9"  /><label for="sz9">9</label>
+        <input type="radio" name="size" id="sz95" /><label for="sz95">9.5</label>
+        <input type="radio" name="size" id="sz10" /><label for="sz10">10</label>
+        <span class="size-sold" style="width:52px;height:44px;background:var(--card);border:1px solid var(--border);color:#444;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;text-decoration:line-through;">10.5</span>
+        <input type="radio" name="size" id="sz11" /><label for="sz11">11</label>
       </div>
+ 
+      <!-- COLOR (radio) -->
       <div class="selector-label">Color</div>
       <div class="color-row">
-        <div class="color-swatch active" style="background:#ff3c1f" onclick="selectColor(this)"></div>
-        <div class="color-swatch" style="background:#1a1a2e" onclick="selectColor(this)"></div>
-        <div class="color-swatch" style="background:#e8e0d0" onclick="selectColor(this)"></div>
-        <div class="color-swatch" style="background:#2d6a4f" onclick="selectColor(this)"></div>
-        <div class="color-swatch" style="background:#0077b6" onclick="selectColor(this)"></div>
+        <input type="radio" name="color" id="col1" checked /><label for="col1" style="background:#ff3c1f;"></label>
+        <input type="radio" name="color" id="col2" /><label for="col2" style="background:#1a1a2e;"></label>
+        <input type="radio" name="color" id="col3" /><label for="col3" style="background:#e8e0d0;"></label>
+        <input type="radio" name="color" id="col4" /><label for="col4" style="background:#2d6a4f;"></label>
+        <input type="radio" name="color" id="col5" /><label for="col5" style="background:#0077b6;"></label>
       </div>
+ 
+      <!-- QUANTITY (static display) -->
       <div class="selector-label">Quantity</div>
-      <div class="cart-row">
+      <div class="qty-wrap">
         <div class="qty-control">
-          <button class="qty-btn" onclick="changeProductQty(-1)">−</button>
-          <div class="qty-value" id="productQty">1</div>
-          <button class="qty-btn" onclick="changeProductQty(1)">+</button>
+          <span class="qty-btn-fake">−</span>
+          <span class="qty-static">1</span>
+          <span class="qty-btn-fake">+</span>
         </div>
-        <button class="btn-add-cart" onclick="addToCart()">
+        <a class="btn-add-cart" href="#page-cart">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           Add to Cart
-        </button>
+        </a>
         <button class="btn-wishlist">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </button>
       </div>
+ 
       <div class="perks">
-        <div class="perk"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Free shipping over $100</div>
-        <div class="perk"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>30-day easy returns</div>
-        <div class="perk"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>2-year warranty</div>
+        <div class="perk">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Free shipping over ₹5000
+        </div>
+        <div class="perk">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          30-day easy returns
+        </div>
+        <div class="perk">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          2-year warranty
+        </div>
       </div>
     </div>
   </section>
+ 
+  <!-- Gallery -->
   <section class="gallery-section">
     <div class="gallery-header">
-      <h2 class="gallery-title">More Views & Colorways</h2>
-      <span class="gallery-hint"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>Scroll to explore</span>
+      <h2 class="gallery-title">More Views &amp; Colorways</h2>
+      <span class="gallery-hint">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        Scroll to explore
+      </span>
     </div>
     <div class="gallery-scroll">
-      <div class="gallery-card active" onclick="switchGallery(this,'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&auto=format&fit=crop')">
-        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&auto=format&fit=crop" /><div class="gallery-card-name">Air Phantom — Red Fire</div><div class="gallery-card-price">₹12,499</div>
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&auto=format&fit=crop" alt="Red Fire" />
+        <div class="gallery-card-name">Air Phantom — Red Fire</div>
+        <div class="gallery-card-price">₹12,499</div>
       </div>
-      <div class="gallery-card" onclick="switchGallery(this,'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=900&auto=format&fit=crop')">
-        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&auto=format&fit=crop" /><div class="gallery-card-name">Air Phantom — White</div><div class="gallery-card-price">₹12,499</div>
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&auto=format&fit=crop" alt="White" />
+        <div class="gallery-card-name">Air Phantom — White</div>
+        <div class="gallery-card-price">₹12,499</div>
       </div>
-      <div class="gallery-card" onclick="switchGallery(this,'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=900&auto=format&fit=crop')">
-        <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop" /><div class="gallery-card-name">Air Phantom — Sole</div><div class="gallery-card-price">₹12,499</div>
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop" alt="Sole" />
+        <div class="gallery-card-name">Air Phantom — Sole</div>
+        <div class="gallery-card-price">₹12,499</div>
       </div>
-      <div class="gallery-card" onclick="switchGallery(this,'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=900&auto=format&fit=crop')">
-        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&auto=format&fit=crop" /><div class="gallery-card-name">Air Phantom — Side</div><div class="gallery-card-price">₹12,499</div>
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&auto=format&fit=crop" alt="Side" />
+        <div class="gallery-card-name">Air Phantom — Side</div>
+        <div class="gallery-card-price">₹12,499</div>
       </div>
-      <div class="gallery-card" onclick="switchGallery(this,'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=900&auto=format&fit=crop')">
-        <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400&auto=format&fit=crop" /><div class="gallery-card-name">Air Phantom — Back</div><div class="gallery-card-price">₹12,499</div>
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400&auto=format&fit=crop" alt="Back" />
+        <div class="gallery-card-name">Air Phantom — Back</div>
+        <div class="gallery-card-price">₹12,499</div>
       </div>
-      <div class="gallery-card" onclick="switchGallery(this,'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=900&auto=format&fit=crop')">
-        <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&auto=format&fit=crop" /><div class="gallery-card-name">Air Phantom — Pair</div><div class="gallery-card-price">₹12,499</div>
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&auto=format&fit=crop" alt="Pair" />
+        <div class="gallery-card-name">Air Phantom — Pair</div>
+        <div class="gallery-card-price">₹12,499</div>
       </div>
     </div>
   </section>
 </div>
  
 <!-- ══════════════════════ PAGE 3: CART ══════════════════════ -->
-<div class="page" id="page-cart" style="margin-top:var(--nav-height)">
-  <div style="padding:40px 60px 80px; max-width:1340px; margin:0 auto;">
+<div class="page" id="page-cart" style="margin-top:var(--nav-h)">
+  <div style="padding:40px 60px 80px;max-width:1340px;margin:0 auto;">
     <div class="breadcrumb">
-      <a onclick="goto('landing')">Home</a><span>›</span>
+      <a href="#page-landing">Home</a><span>›</span>
       <span class="current">Cart</span>
     </div>
     <div class="page-header">
-      <h1 class="page-title">Shopping <span>Cart</span></h1>
-      <span class="item-count-label" id="cartItemLabel">0 Items</span>
+      <h1 class="page-title">Shopping <span class="accent">Cart</span></h1>
+      <span class="item-count-label">4 Items</span>
     </div>
     <div class="cart-layout">
       <div class="cart-left">
         <div class="cart-table-wrap">
           <table>
-            <thead><tr><th>Product</th><th>Quantity</th><th>Price</th><th>Remove</th></tr></thead>
-            <tbody id="cartBody"></tbody>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-thumb"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop" alt="Air Phantom Pro"/></div>
+                    <div>
+                      <div class="p-name">Air Phantom Pro</div>
+                      <div class="p-meta"><span>Size: US 8</span><span>Red Fire</span></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="qty-cell">
+                  <div class="qty-control" style="display:inline-flex;">
+                    <span class="qty-btn-fake">−</span>
+                    <span class="qty-static">1</span>
+                    <span class="qty-btn-fake">+</span>
+                  </div>
+                </td>
+                <td class="price-cell">₹12,499<span class="orig">₹19,199</span></td>
+                <td class="remove-cell">
+                  <button class="remove-btn">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-thumb"><img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=200&auto=format&fit=crop" alt="Urban Drift Low"/></div>
+                    <div>
+                      <div class="p-name">Urban Drift Low</div>
+                      <div class="p-meta"><span>Size: US 9</span><span>Midnight</span></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="qty-cell">
+                  <div class="qty-control" style="display:inline-flex;">
+                    <span class="qty-btn-fake">−</span>
+                    <span class="qty-static">2</span>
+                    <span class="qty-btn-fake">+</span>
+                  </div>
+                </td>
+                <td class="price-cell">₹17,998<span class="orig">₹27,998</span></td>
+                <td class="remove-cell">
+                  <button class="remove-btn">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-thumb"><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200&auto=format&fit=crop" alt="Volt Runner X"/></div>
+                    <div>
+                      <div class="p-name">Volt Runner X</div>
+                      <div class="p-meta"><span>Size: US 10</span><span>Ocean</span></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="qty-cell">
+                  <div class="qty-control" style="display:inline-flex;">
+                    <span class="qty-btn-fake">−</span>
+                    <span class="qty-static">1</span>
+                    <span class="qty-btn-fake">+</span>
+                  </div>
+                </td>
+                <td class="price-cell">₹15,499</td>
+                <td class="remove-cell">
+                  <button class="remove-btn">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
-        <div style="margin-top:28px; padding-top:24px; border-top:1px solid var(--border);">
-          <span class="continue-link" onclick="goto('product')">
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border);">
+          <a class="continue-link" href="#page-product">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             Continue Shopping
-          </span>
+          </a>
         </div>
       </div>
       <div class="cart-right">
@@ -197,27 +317,35 @@
           <div class="summary-body">
             <div class="coupon-lbl">Promo Code</div>
             <div class="coupon-row">
-              <input class="coupon-input" id="cartCoupon" type="text" placeholder="e.g. STRIDE20" maxlength="16" />
-              <button class="coupon-apply-btn" onclick="applyCartCoupon()">Apply</button>
+              <input class="coupon-input" type="text" placeholder="e.g. STRIDE20" maxlength="16" />
+              <button class="coupon-apply-btn">Apply</button>
             </div>
-            <div class="coupon-ok" id="cartCouponOk"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>20% discount applied!</div>
             <hr class="sum-divider" />
             <div class="sum-lines">
-              <div class="sum-line"><span class="sl">Sub Total</span><span class="sv" id="cartSubtotal">₹0.00</span></div>
-              <div class="sum-line"><span class="sl">Taxes (8%)</span><span class="sv" id="cartTax">₹0.00</span></div>
-              <div class="sum-line"><span class="sl">Discount</span><span class="sv green" id="cartDiscount">— ₹0.00</span></div>
+              <div class="sum-line"><span class="sl">Sub Total</span><span class="sv">₹45,996.00</span></div>
+              <div class="sum-line"><span class="sl">Taxes (18%)</span><span class="sv">₹8,279.28</span></div>
+              <div class="sum-line"><span class="sl">Discount</span><span class="sv green">— ₹0.00</span></div>
               <div class="sum-line"><span class="sl">Shipping</span><span class="sv green">FREE</span></div>
             </div>
             <hr class="sum-divider" />
-            <div class="total-block"><span class="tl">Total</span><span class="tv" id="cartTotal">₹0.00</span></div>
-            <button class="paynow-btn" onclick="goto('payment')">
+            <div class="total-block">
+              <span class="tl">Total</span>
+              <span class="tv">₹54,275.28</span>
+            </div>
+            <a class="paynow-btn" href="#page-payment">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
               Proceed to Checkout
-            </button>
+            </a>
             <div class="rzp-block">
               <div class="rzp-top">
-                <div class="rzp-logo"><div class="rzp-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7L10 2zm0 2.5l5 3.5v4.5L10 16 5 12.5V8l5-3.5z"/></svg></div><span class="rzp-name">Razorpay</span></div>
-                <div class="rzp-secure"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>100% Secure</div>
+                <div class="rzp-logo">
+                  <div class="rzp-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7L10 2zm0 2.5l5 3.5v4.5L10 16 5 12.5V8l5-3.5z"/></svg></div>
+                  <span class="rzp-name">Razorpay</span>
+                </div>
+                <div class="rzp-secure">
+                  <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  100% Secure
+                </div>
               </div>
               <div class="rzp-methods">
                 <span class="rzp-chip"><span class="dot" style="background:#1a1fe8"></span>Visa</span>
@@ -236,11 +364,11 @@
 </div>
  
 <!-- ══════════════════════ PAGE 4: PAYMENT ══════════════════════ -->
-<div class="page" id="page-payment" style="margin-top:var(--nav-height)">
-  <div style="padding:40px 60px 80px; max-width:1300px; margin:0 auto;">
+<div class="page" id="page-payment" style="margin-top:var(--nav-h)">
+  <div style="padding:40px 60px 80px;max-width:1300px;margin:0 auto;">
     <div class="breadcrumb">
-      <a onclick="goto('landing')">Home</a><span>›</span>
-      <a onclick="goto('cart')">Cart</a><span>›</span>
+      <a href="#page-landing">Home</a><span>›</span>
+      <a href="#page-cart">Cart</a><span>›</span>
       <span class="current">Checkout</span>
     </div>
     <div class="steps">
@@ -253,63 +381,111 @@
     <div class="checkout-layout">
       <div class="checkout-left">
         <div>
-          <h1 class="section-heading">Check<span>out</span></h1>
+          <h1 class="section-heading">Check<span class="accent">out</span></h1>
           <p class="section-sub">Complete your order securely — takes less than a minute.</p>
         </div>
+ 
+        <!-- Contact info -->
         <div class="form-card">
           <div class="form-card-title">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             Contact Information
           </div>
-          <div class="input-group"><label>Email ID</label><input class="input-field" type="email" placeholder="you@example.com" id="emailInput" oninput="updateCardHolder()" /></div>
+          <div class="input-group"><label>Email ID</label><input class="input-field" type="email" placeholder="you@example.com" /></div>
           <div class="input-row">
-            <div class="input-group"><label>First Name</label><input class="input-field" type="text" placeholder="John" id="firstName" oninput="updateCardHolder()" /></div>
-            <div class="input-group"><label>Last Name</label><input class="input-field" type="text" placeholder="Doe" id="lastName" oninput="updateCardHolder()" /></div>
+            <div class="input-group"><label>First Name</label><input class="input-field" type="text" placeholder="John" /></div>
+            <div class="input-group"><label>Last Name</label><input class="input-field" type="text" placeholder="Doe" /></div>
           </div>
         </div>
+ 
+        <!-- Payment method -->
         <div class="form-card">
           <div class="form-card-title">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
             Payment Method
           </div>
+ 
+          <!-- Radio inputs for tabs -->
+          <input type="radio" name="paymethod" id="tab-card"   checked />
+          <input type="radio" name="paymethod" id="tab-upi"          />
+          <input type="radio" name="paymethod" id="tab-crypto"       />
+          <input type="radio" name="paymethod" id="tab-bank"         />
+          <input type="radio" name="paymethod" id="tab-wallet"       />
+ 
           <div class="pay-tabs">
-            <div class="pay-tab active" onclick="switchPayTab('card',this)"><span class="tab-icon">💳</span><span class="tab-label">Card</span></div>
-            <div class="pay-tab" onclick="switchPayTab('upi',this)"><span class="tab-icon">📱</span><span class="tab-label">UPI</span></div>
-            <div class="pay-tab" onclick="switchPayTab('crypto',this)"><span class="tab-icon">₿</span><span class="tab-label">Crypto</span></div>
-            <div class="pay-tab" onclick="switchPayTab('bank',this)"><span class="tab-icon">🏦</span><span class="tab-label">Net Banking</span></div>
-            <div class="pay-tab" onclick="switchPayTab('wallet',this)"><span class="tab-icon">👜</span><span class="tab-label">Wallet</span></div>
+            <label for="tab-card"   class="pay-tab-label"><span class="tab-icon">💳</span><span class="tab-label">Card</span></label>
+            <label for="tab-upi"    class="pay-tab-label"><span class="tab-icon">📱</span><span class="tab-label">UPI</span></label>
+            <label for="tab-crypto" class="pay-tab-label"><span class="tab-icon">₿</span><span class="tab-label">Crypto</span></label>
+            <label for="tab-bank"   class="pay-tab-label"><span class="tab-icon">🏦</span><span class="tab-label">Net Banking</span></label>
+            <label for="tab-wallet" class="pay-tab-label"><span class="tab-icon">👜</span><span class="tab-label">Wallet</span></label>
           </div>
-          <!-- Card panel -->
-          <div id="ppanel-card">
-            <div class="card-display">
-              <div class="card-chip"></div>
-              <div class="card-num-display" id="cardNumDisplay">•••• •••• •••• ••••</div>
-              <div class="card-bottom">
-                <div><div class="card-fl">Card Holder</div><div class="card-fv" id="cardHolderDisplay">YOUR NAME</div></div>
-                <div><div class="card-fl">Expires</div><div class="card-fv" id="cardExpDisplay">MM / YY</div></div>
+ 
+          <div class="pay-panels">
+            <div id="ppanel-card">
+              <div class="card-display">
+                <div class="card-chip"></div>
+                <div class="card-num-display">•••• •••• •••• ••••</div>
+                <div class="card-bottom">
+                  <div><div class="card-fl">Card Holder</div><div class="card-fv">YOUR NAME</div></div>
+                  <div><div class="card-fl">Expires</div><div class="card-fv">MM / YY</div></div>
+                </div>
+                <div class="card-network"><div class="c1"></div><div class="c2"></div></div>
               </div>
-              <div class="card-network"><div class="c1"></div><div class="c2"></div></div>
+              <div class="input-group"><label>Card Number</label><input class="input-field" type="text" placeholder="1234 5678 9012 3456" maxlength="19" /></div>
+              <div class="input-row">
+                <div class="input-group"><label>Expiry Date</label><input class="input-field" type="text" placeholder="MM / YY" maxlength="7" /></div>
+                <div class="input-group"><label>CVV</label><input class="input-field" type="password" placeholder="•••" maxlength="4" /></div>
+              </div>
+              <div class="input-row">
+                <div class="input-group"><label>Country</label>
+                  <select class="input-field">
+                    <option value="" disabled selected>Select Country</option>
+                    <option>India</option><option>United States</option><option>United Kingdom</option>
+                    <option>UAE</option><option>Canada</option><option>Australia</option>
+                  </select>
+                </div>
+                <div class="input-group"><label>ZIP / Postal Code</label><input class="input-field" type="text" placeholder="400001" maxlength="10" /></div>
+              </div>
             </div>
-            <div class="input-group"><label>Card Number</label><input class="input-field" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCardNum(this);updateCardDisplay()" /></div>
-            <div class="input-row">
-              <div class="input-group"><label>Expiry Date</label><input class="input-field" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtExpiry(this);document.getElementById('cardExpDisplay').textContent=this.value||'MM / YY'" /></div>
-              <div class="input-group"><label>CVV</label><input class="input-field" type="password" placeholder="•••" maxlength="4" /></div>
+            <div id="ppanel-upi">
+              <div class="input-group"><label>UPI ID</label><input class="input-field" type="text" placeholder="yourname@upi" /></div>
+              <div class="crypto-grid">
+                <div class="crypto-chip">🟣 PhonePe</div>
+                <div class="crypto-chip">🔵 Google Pay</div>
+                <div class="crypto-chip">🟡 Paytm</div>
+                <div class="crypto-chip">🟠 BHIM</div>
+              </div>
             </div>
-            <div class="input-row">
-              <div class="input-group"><label>Country</label><select class="input-field"><option value="" disabled selected>Select Country</option><option>India</option><option>United States</option><option>United Kingdom</option><option>UAE</option><option>Canada</option><option>Australia</option></select></div>
-              <div class="input-group"><label>ZIP / Postal Code</label><input class="input-field" type="text" placeholder="400001" maxlength="10" /></div>
+            <div id="ppanel-crypto">
+              <div class="input-group"><label>Wallet Address</label><input class="input-field" type="text" placeholder="0x742d35Cc..." /></div>
+              <div class="crypto-grid">
+                <div class="crypto-chip">₿ Bitcoin</div>
+                <div class="crypto-chip">Ξ Ethereum</div>
+                <div class="crypto-chip">◎ Solana</div>
+                <div class="crypto-chip">◈ USDT</div>
+              </div>
+            </div>
+            <div id="ppanel-bank">
+              <div class="input-group"><label>Select Bank</label>
+                <select class="input-field">
+                  <option value="" disabled selected>Choose your bank</option>
+                  <option>SBI</option><option>HDFC Bank</option><option>ICICI Bank</option>
+                  <option>Axis Bank</option><option>Kotak Mahindra</option>
+                </select>
+              </div>
+            </div>
+            <div id="ppanel-wallet">
+              <div class="crypto-grid" style="margin-top:0;">
+                <div class="crypto-chip">💙 Paytm Wallet</div>
+                <div class="crypto-chip">💜 Amazon Pay</div>
+                <div class="crypto-chip">🧡 Mobikwik</div>
+                <div class="crypto-chip">💚 Freecharge</div>
+              </div>
             </div>
           </div>
-          <!-- UPI panel -->
-          <div id="ppanel-upi" class="alt-panel"><div class="input-group"><label>UPI ID</label><input class="input-field" type="text" placeholder="yourname@upi" /></div><div class="crypto-grid"><div class="crypto-chip">🟣 PhonePe</div><div class="crypto-chip">🔵 Google Pay</div><div class="crypto-chip">🟡 Paytm</div><div class="crypto-chip">🟠 BHIM</div></div></div>
-          <!-- Crypto panel -->
-          <div id="ppanel-crypto" class="alt-panel"><div class="input-group"><label>Wallet Address</label><input class="input-field" type="text" placeholder="0x742d35Cc..." /></div><div class="crypto-grid"><div class="crypto-chip">₿ Bitcoin</div><div class="crypto-chip">Ξ Ethereum</div><div class="crypto-chip">◎ Solana</div><div class="crypto-chip">◈ USDT</div></div></div>
-          <!-- Bank panel -->
-          <div id="ppanel-bank" class="alt-panel"><div class="input-group"><label>Select Bank</label><select class="input-field"><option value="" disabled selected>Choose your bank</option><option>SBI</option><option>HDFC Bank</option><option>ICICI Bank</option><option>Axis Bank</option><option>Kotak Mahindra</option></select></div></div>
-          <!-- Wallet panel -->
-          <div id="ppanel-wallet" class="alt-panel"><div class="crypto-grid"><div class="crypto-chip">💙 Paytm Wallet</div><div class="crypto-chip">💜 Amazon Pay</div><div class="crypto-chip">🧡 Mobikwik</div><div class="crypto-chip">💚 Freecharge</div></div></div>
         </div>
       </div>
+ 
       <!-- Right summary -->
       <div class="checkout-right">
         <div class="summary-card">
@@ -318,31 +494,55 @@
             <h2>Order Summary</h2>
           </div>
           <div class="summary-body">
-            <div class="mini-items" id="payMiniItems"></div>
+            <div class="mini-items">
+              <div class="mini-item">
+                <img class="mini-thumb" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&auto=format&fit=crop" alt="Air Phantom Pro"/>
+                <span class="mini-name">Air Phantom Pro <span style="color:var(--muted)">×1</span></span>
+                <span class="mini-price">₹12,499</span>
+              </div>
+              <div class="mini-item">
+                <img class="mini-thumb" src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=100&auto=format&fit=crop" alt="Urban Drift Low"/>
+                <span class="mini-name">Urban Drift Low <span style="color:var(--muted)">×2</span></span>
+                <span class="mini-price">₹17,998</span>
+              </div>
+              <div class="mini-item">
+                <img class="mini-thumb" src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=100&auto=format&fit=crop" alt="Volt Runner X"/>
+                <span class="mini-name">Volt Runner X <span style="color:var(--muted)">×1</span></span>
+                <span class="mini-price">₹15,499</span>
+              </div>
+            </div>
             <hr class="sum-divider" />
             <div class="coupon-lbl">Promo Code</div>
             <div class="coupon-row">
-              <input class="coupon-input" id="payCoupon" type="text" placeholder="e.g. STRIDE20" maxlength="16" />
-              <button class="coupon-apply-btn" onclick="applyPayCoupon()">Apply</button>
+              <input class="coupon-input" type="text" placeholder="e.g. STRIDE20" maxlength="16" />
+              <button class="coupon-apply-btn">Apply</button>
             </div>
-            <div class="coupon-ok" id="payCouponOk"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>20% applied!</div>
             <hr class="sum-divider" />
             <div class="sum-lines">
-              <div class="sum-line"><span class="sl">Sub Total</span><span class="sv" id="paySubtotal">₹0.00</span></div>
-              <div class="sum-line"><span class="sl">Taxes (8%)</span><span class="sv" id="payTax">₹0.00</span></div>
-              <div class="sum-line"><span class="sl">Discount</span><span class="sv green" id="payDiscount">— ₹0.00</span></div>
+              <div class="sum-line"><span class="sl">Sub Total</span><span class="sv">₹45,996.00</span></div>
+              <div class="sum-line"><span class="sl">Taxes (18%)</span><span class="sv">₹8,279.28</span></div>
+              <div class="sum-line"><span class="sl">Discount</span><span class="sv green">— ₹0.00</span></div>
               <div class="sum-line"><span class="sl">Shipping</span><span class="sv green">FREE</span></div>
             </div>
             <hr class="sum-divider" />
-            <div class="total-block"><span class="tl">Total</span><span class="tv" id="payTotal">₹0.00</span></div>
-            <button class="paynow-btn" onclick="placeOrder()">
+            <div class="total-block"><span class="tl">Total</span><span class="tv">₹54,275.28</span></div>
+ 
+            <!-- Pay Now triggers the confirmation overlay -->
+            <label class="paynow-btn" for="orderDone" style="cursor:pointer;">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
               Pay Now
-            </button>
+            </label>
+ 
             <div class="rzp-block">
               <div class="rzp-top">
-                <div class="rzp-logo"><div class="rzp-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7L10 2zm0 2.5l5 3.5v4.5L10 16 5 12.5V8l5-3.5z"/></svg></div><span class="rzp-name">Razorpay</span></div>
-                <div class="rzp-secure"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>100% Secure</div>
+                <div class="rzp-logo">
+                  <div class="rzp-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7L10 2zm0 2.5l5 3.5v4.5L10 16 5 12.5V8l5-3.5z"/></svg></div>
+                  <span class="rzp-name">Razorpay</span>
+                </div>
+                <div class="rzp-secure">
+                  <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  100% Secure
+                </div>
               </div>
               <div class="rzp-methods">
                 <span class="rzp-chip"><span class="dot" style="background:#1a1fe8"></span>Visa</span>
@@ -361,345 +561,17 @@
 </div>
  
 <!-- ══════════════════════ ORDER CONFIRMATION ══════════════════════ -->
-<div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-box">
+<label class="confirm-overlay" for="orderDone">
+  <div class="confirm-box" onclick="event.stopPropagation()">
     <div class="confirm-icon">🎉</div>
     <div class="confirm-title">Order Placed!</div>
-    <p class="confirm-msg">Thank you for shopping with STRIDEX! Your sneakers are on their way. You'll receive a tracking email shortly.</p>
-    <div class="confirm-id" id="confirmId">ORDER #SX-000000</div>
-    <button class="confirm-btn" onclick="closeConfirm()">
+    <p class="confirm-msg">Thank you for shopping with THALA-7! Your sneakers are on their way. You'll receive a tracking email shortly.</p>
+    <div class="confirm-id">ORDER #T7-847291</div>
+    <label class="confirm-btn" for="orderDone">
       <svg fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       Back to Home
-    </button>
+    </label>
   </div>
-</div>
- 
-<script>
-    // ═══════════════════════════════════════════════════════════
-//  THALA 7 — script.js
-//  All application logic: navigation, cart, product, payment
-// ═══════════════════════════════════════════════════════════
-
-// ═══════════════════════════════════════
-//  SHARED CART STATE
-// ═══════════════════════════════════════
-let cart = [
-  {
-    id: 1, name: 'Air Phantom Pro',
-    meta: ['Size: US 8', 'Red Fire'],
-    img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop',
-    price: 12499, original: 19199, qty: 1
-  },
-  {
-    id: 2, name: 'Urban Drift Low',
-    meta: ['Size: US 9', 'Midnight'],
-    img: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=200&auto=format&fit=crop',
-    price: 8999, original: 13999, qty: 2
-  },
-  {
-    id: 3, name: 'Volt Runner X',
-    meta: ['Size: US 10', 'Ocean'],
-    img: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200&auto=format&fit=crop',
-    price: 15499, original: 15499, qty: 1
-  }
-];
-
-let cartCouponOn = false;
-let payCouponOn  = false;
-
-const TAX_RATE   = 0.18;   // 18% GST
-const DISC_RATE  = 0.20;   // 20% coupon discount
-const COUPON_CODE = 'STRIDE20';
-
-// ═══════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════
-
-/** Format a number as Indian Rupee string e.g. ₹12,499.00 */
-function inr(amount) {
-  return '₹' + amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
-// ═══════════════════════════════════════
-//  NAVIGATION
-// ═══════════════════════════════════════
-function goto(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  window.scrollTo(0, 0);
-  if (page === 'cart')    renderCart();
-  if (page === 'payment') renderPaymentSummary();
-}
-
-// ═══════════════════════════════════════
-//  CART BADGE
-// ═══════════════════════════════════════
-function updateBadge() {
-  const total = cart.reduce((s, i) => s + i.qty, 0);
-  const badge = document.getElementById('cartBadge');
-  badge.textContent = total;
-  badge.classList.add('bump');
-  setTimeout(() => badge.classList.remove('bump'), 300);
-}
-
-// ═══════════════════════════════════════
-//  PRODUCT PAGE
-// ═══════════════════════════════════════
-let productQty = 1;
-
-function changeProductQty(d) {
-  productQty = Math.max(1, Math.min(10, productQty + d));
-  document.getElementById('productQty').textContent = productQty;
-}
-
-function selectSize(btn) {
-  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-function selectColor(sw) {
-  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-  sw.classList.add('active');
-}
-
-function switchGallery(card, src) {
-  document.querySelectorAll('.gallery-card').forEach(c => c.classList.remove('active'));
-  card.classList.add('active');
-  const img = document.getElementById('mainImg');
-  img.style.opacity = '0';
-  img.style.transform = 'scale(0.95)';
-  setTimeout(() => {
-    img.src = src;
-    img.style.transition = 'opacity 0.35s, transform 0.35s';
-    img.style.opacity = '1';
-    img.style.transform = 'scale(1)';
-  }, 200);
-}
-
-function addToCart() {
-  const existing = cart.find(i => i.id === 1);
-  if (existing) {
-    existing.qty += productQty;
-  } else {
-    cart.unshift({
-      id: 1, name: 'Air Phantom Pro',
-      meta: ['Size: US 8', 'Red Fire'],
-      img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop',
-      price: 12499, original: 19199, qty: productQty
-    });
-  }
-  updateBadge();
-
-  // Green "Added!" feedback
-  const btn  = document.querySelector('.btn-add-cart');
-  const orig = btn.innerHTML;
-  btn.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Added!';
-  btn.style.background = 'var(--green)';
-  setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1500);
-}
-
-// ═══════════════════════════════════════
-//  CART PAGE
-// ═══════════════════════════════════════
-function renderCart() {
-  const tbody = document.getElementById('cartBody');
-  tbody.innerHTML = '';
-
-  if (!cart.length) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="4" style="text-align:center;padding:60px;color:var(--muted)">
-          🛒 Your cart is empty.
-          <span onclick="goto('product')" style="color:var(--accent);cursor:pointer">Keep shopping →</span>
-        </td>
-      </tr>`;
-  } else {
-    cart.forEach((p, i) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>
-          <div class="product-cell">
-            <div class="product-thumb"><img src="${p.img}" /></div>
-            <div>
-              <div class="p-name">${p.name}</div>
-              <div class="p-meta">${p.meta.map(m => `<span>${m}</span>`).join('')}</div>
-            </div>
-          </div>
-        </td>
-        <td class="qty-cell">
-          <div class="qty-control">
-            <button class="qty-btn" onclick="cartQty(${i}, -1)">−</button>
-            <div class="qty-value">${p.qty}</div>
-            <button class="qty-btn" onclick="cartQty(${i}, 1)">+</button>
-          </div>
-        </td>
-        <td class="price-cell">
-          ${inr(p.price * p.qty)}
-          ${p.original !== p.price ? `<span class="original">${inr(p.original * p.qty)}</span>` : ''}
-        </td>
-        <td class="remove-cell">
-          <button class="remove-btn" onclick="removeCartItem(${i})">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <polyline points="3 6 5 6 21 6"/>
-              <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-              <path d="M10 11v6M14 11v6"/>
-              <path d="M9 6V4h6v2"/>
-            </svg>
-          </button>
-        </td>`;
-      tbody.appendChild(tr);
-    });
-  }
-  calcCart();
-}
-
-function cartQty(i, d) {
-  cart[i].qty = Math.max(1, cart[i].qty + d);
-  renderCart();
-}
-
-function removeCartItem(i) {
-  const rows = document.getElementById('cartBody').rows;
-  if (rows[i]) {
-    rows[i].style.transition = 'opacity 0.25s, transform 0.25s';
-    rows[i].style.opacity    = '0';
-    rows[i].style.transform  = 'translateX(30px)';
-  }
-  setTimeout(() => { cart.splice(i, 1); renderCart(); updateBadge(); }, 260);
-}
-
-function calcCart(couponOn) {
-  const on  = couponOn !== undefined ? couponOn : cartCouponOn;
-  const sub  = cart.reduce((s, p) => s + p.price * p.qty, 0);
-  const tax  = sub * TAX_RATE;
-  const disc = on ? (sub + tax) * DISC_RATE : 0;
-  const total = sub + tax - disc;
-
-  document.getElementById('cartSubtotal').textContent = inr(sub);
-  document.getElementById('cartTax').textContent      = inr(tax);
-  document.getElementById('cartDiscount').textContent = disc > 0 ? `— ${inr(disc)}` : `— ₹0.00`;
-  document.getElementById('cartTotal').textContent    = inr(total);
-  document.getElementById('cartItemLabel').textContent =
-    `${cart.reduce((s, p) => s + p.qty, 0)} Items`;
-
-  updateBadge();
-}
-
-function applyCartCoupon() {
-  const v = document.getElementById('cartCoupon').value.trim().toUpperCase();
-  cartCouponOn = (v === COUPON_CODE);
-  document.getElementById('cartCouponOk').classList.toggle('show', cartCouponOn);
-  if (!cartCouponOn) {
-    const el = document.getElementById('cartCoupon');
-    el.style.borderColor = 'rgba(255,60,31,0.6)';
-    setTimeout(() => el.style.borderColor = '', 1200);
-  }
-  calcCart(cartCouponOn);
-}
-
-// ═══════════════════════════════════════
-//  PAYMENT PAGE
-// ═══════════════════════════════════════
-function renderPaymentSummary() {
-  const mini = document.getElementById('payMiniItems');
-  mini.innerHTML = cart.map(p => `
-    <div class="mini-item">
-      <img class="mini-thumb" src="${p.img}" />
-      <span class="mini-name">${p.name} <span style="color:var(--muted)">×${p.qty}</span></span>
-      <span class="mini-price">${inr(p.price * p.qty)}</span>
-    </div>`).join('');
-  calcPay(payCouponOn);
-}
-
-function calcPay(on) {
-  const sub  = cart.reduce((s, p) => s + p.price * p.qty, 0);
-  const tax  = sub * TAX_RATE;
-  const disc = on ? (sub + tax) * DISC_RATE : 0;
-  const total = sub + tax - disc;
-
-  document.getElementById('paySubtotal').textContent = inr(sub);
-  document.getElementById('payTax').textContent      = inr(tax);
-  document.getElementById('payDiscount').textContent = disc > 0 ? `— ${inr(disc)}` : `— ₹0.00`;
-  document.getElementById('payTotal').textContent    = inr(total);
-}
-
-function applyPayCoupon() {
-  const v = document.getElementById('payCoupon').value.trim().toUpperCase();
-  payCouponOn = (v === COUPON_CODE);
-  document.getElementById('payCouponOk').classList.toggle('show', payCouponOn);
-  if (!payCouponOn) {
-    const el = document.getElementById('payCoupon');
-    el.style.borderColor = 'rgba(255,60,31,0.6)';
-    setTimeout(() => el.style.borderColor = '', 1200);
-  }
-  calcPay(payCouponOn);
-}
-
-// ── Payment method tabs ──
-const payPanels = ['card', 'upi', 'crypto', 'bank', 'wallet'];
-
-function switchPayTab(id, el) {
-  document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  payPanels.forEach(p => {
-    const panel = document.getElementById('ppanel-' + p);
-    if (panel) panel.style.display = (p === id) ? 'block' : 'none';
-  });
-}
-
-// ── Live card preview ──
-function fmtCardNum(el) {
-  let v = el.value.replace(/\D/g, '').substring(0, 16);
-  el.value = v.replace(/(.{4})/g, '$1 ').trim();
-}
-
-function fmtExpiry(el) {
-  let v = el.value.replace(/\D/g, '').substring(0, 4);
-  if (v.length >= 2) v = v.substring(0, 2) + ' / ' + v.substring(2);
-  el.value = v;
-}
-
-function updateCardDisplay() {
-  const input = document.querySelector('#ppanel-card input[placeholder="1234 5678 9012 3456"]');
-  const raw   = input ? input.value : '';
-  const padded = (raw + '                   ').substring(0, 19);
-  document.getElementById('cardNumDisplay').textContent = padded || '•••• •••• •••• ••••';
-}
-
-function updateCardHolder() {
-  const fn = document.getElementById('firstName').value || '';
-  const ln = document.getElementById('lastName').value  || '';
-  const name = (fn + ' ' + ln).trim().toUpperCase() || 'YOUR NAME';
-  document.getElementById('cardHolderDisplay').textContent = name;
-}
-
-// ── Place order ──
-function placeOrder() {
-  const orderId = 'T7-' + Math.floor(100000 + Math.random() * 900000);
-  document.getElementById('confirmId').textContent = 'ORDER #' + orderId;
-  document.getElementById('confirmOverlay').classList.add('show');
-}
-
-function closeConfirm() {
-  document.getElementById('confirmOverlay').classList.remove('show');
-  cart         = [];
-  cartCouponOn = false;
-  payCouponOn  = false;
-  updateBadge();
-  goto('landing');
-}
-
-// ═══════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════
-(function init() {
-  // Hide all payment panels except card
-  payPanels.forEach(p => {
-    const panel = document.getElementById('ppanel-' + p);
-    if (panel && p !== 'card') panel.style.display = 'none';
-  });
-  updateBadge();
-})();
-</script>
+</label>
 </body>
 </html>
